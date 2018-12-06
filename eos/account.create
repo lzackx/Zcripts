@@ -1,0 +1,37 @@
+#!/bin/bash
+echo "create key pairs"
+echo "owner:" > $1
+cleos create key --to-console >> $1
+echo "active:" >> $1
+cleos create key --to-console >> $1
+
+echo "get key pairs"
+owner_private_key=`sed -n '2,2p' $1 | awk '{print $3}'`
+owner_public_key=`sed -n '3,3p' $1 | awk '{print $3}'`
+active_private_key=`sed -n '5,5p' $1 | awk '{print $3}'`
+active_public_key=`sed -n '6,6p' $1 | awk '{print $3}'`
+echo "owner:"
+echo ${owner_private_key}
+echo ${owner_public_key}
+echo "active:"
+echo ${active_private_key}
+echo ${active_public_key}
+
+echo "import to wallet"
+cleos wallet import -n $2 --private-key ${owner_private_key}
+cleos wallet import -n $2 --private-key ${active_private_key}
+
+echo "create account"
+cleos create account eosio $1 ${owner_public_key} ${active_public_key}
+
+echo "issue eos"
+cleos push action eosio.token issue "[\"$1\", \"10000.0000 EOS\", \"issue EOS\"]" -p eosio
+
+echo "set permission"
+cleos set account permission $1 active "{\"threshold\":1,\"keys\":[{\"key\":\"${active_public_key}\",\"weight\":1}],\"accounts\":[{\"permission\":{\"actor\":\"$1\",\"permission\":\"eosio.code\"},\"weight\":1}]}" owner
+
+#cleos set account permission mccfliptest3 active '{"threshold":1,"keys":[{"key":"EOS8gfWFREwhpYjnVphXCwhqi3dvxQ46biqgNUW4FTsDkVqRstHTh","weight":1}],"accounts":[{"permission":{"actor":"eosio.token","permission":"eosio.code"},"weight":1},{"permission":{"actor":"mccauctions3","permission":"eosio.code"},"weight":1},{"permission":{"actor":"mccfliptest3","permission":"eosio.code"},"weight":1}]}' owner
+#cleos set account permission mccauctions3 active '{"threshold":1,"keys":[{"key":"EOS5JQPNZRKsZz6QdXDNJuorfauSE7CyLdeAzgMcBRgkiNR6eoe2f","weight":1}],"accounts":[{"permission":{"actor":"eosio.token","permission":"eosio.code"},"weight":1},{"permission":{"actor":"mccauctions3","permission":"eosio.code"},"weight":1}]}' owner
+#cleos set account permission mcctokentest active '{"threshold":1,"keys":[{"key":"EOS5CK89ZAYezo5bbctq8PeXhHGw6RQfztG78V4DkVKC8X893dTby","weight":1}],"accounts":[{"permission":{"actor":"eosio.token","permission":"eosio.code"},"weight":1},{"permission":{"actor":"mccfliptest3","permission":"eosio.code"},"weight":1}]}' owner
+
+#cleos set contract
