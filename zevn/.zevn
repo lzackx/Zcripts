@@ -1,0 +1,9 @@
+
+# Alias
+alias la='ls -al'
+alias pz='ps aux'
+alias zinet='ifconfig | grep "inet"'
+alias ocd='open .'
+alias zdates='date +%s'
+alias zdater='date -r$1'
+
