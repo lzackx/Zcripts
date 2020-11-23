@@ -2,6 +2,7 @@
 
 set -e
 
+echo "reference: https://leux.cn/doc/Raspberry%E9%80%9A%E8%BF%87%E8%93%9D%E7%89%99SSH.html"
 echo "\$*: $*"
 
 while getopts ":a:h" opt
