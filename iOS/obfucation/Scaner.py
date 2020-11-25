@@ -61,7 +61,7 @@ class scaner(object):
     def filter_file_types(self, path):
         filePaths = list(map(lambda f: os.path.join(path, f), os.listdir(path)))
         files = list(filter(lambda fp: os.path.isfile(fp), filePaths))
-        print('files:\n%s' % files)
+        print('files:\n\t%s' % files)
         tfs = list(files)
         for f in tfs:
             ext = os.path.splitext(f)
@@ -73,6 +73,7 @@ class scaner(object):
             else:
                 files.remove(f)
         filePaths = list(map(lambda f: os.path.join(path, f), files))
+        print('filted files:\n\t%s' % filePaths)
         return filePaths
 
     def match(self, pattern, content):
@@ -95,7 +96,6 @@ class scaner(object):
         # 1. scan file
         # 1.1 filter specified file types
         filePaths = self.filter_file_types(path=path);
-        print('filted files:\n%s' % filePaths)
         # 1.2 match
         for fp in filePaths:
             print('file:\n%s' % fp)
@@ -109,8 +109,6 @@ class scaner(object):
                 # methods = self.match(pattern=self.matcher.method_objc_pattern(), content=content)
                 # # 1.2.4 add methods
                 # self.add_methods(methods)
-
-
         # # 2. scan sub directories
         directoryPaths = self.filter_directories(path)
         for d in directoryPaths:

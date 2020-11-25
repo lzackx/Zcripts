@@ -1,6 +1,7 @@
 import sys, os, getopt, json
 
 import scaner
+import substituter
 
 
 def handleOptions(argv):
@@ -38,7 +39,11 @@ def main(argv):
     scanner.scan()
     scanner.save_resultes()
     # scanner.clear_resultes()
-
+    
+    # replace all files of codes
+    substitution = substituter.substituter(sources=options['sources'], scan_results_path=options['target'])
+    substitution.load_scan_results()
+    substitution.substitute()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
