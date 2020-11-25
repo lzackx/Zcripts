@@ -4,7 +4,7 @@ import matcher
 
 class scaner(object):
 
-    def __init__(self, sources = [], target = './result.json'):
+    def __init__(self, sources = [], target = './result.json', verbose=False):
         self.resultes = {
             'classes': {},
             'methods': [],
@@ -13,6 +13,7 @@ class scaner(object):
         self.target = os.path.abspath(os.path.normpath(target))
         self.class_file_types = ['.h']
         self.matcher = matcher.matcher()
+        self.verbose = verbose
     
     # results
     def clear_resultes(self):
@@ -23,6 +24,8 @@ class scaner(object):
         print('scan results:\n%s' % json.dumps(self.resultes))
 
     def save_resultes(self):
+        if os.path.exists(self.target):
+            return
         with open(file=self.target, mode='w') as f:
             json.dump(self.resultes, f)
 
@@ -61,7 +64,8 @@ class scaner(object):
     def filter_file_types(self, path):
         filePaths = list(map(lambda f: os.path.join(path, f), os.listdir(path)))
         files = list(filter(lambda fp: os.path.isfile(fp), filePaths))
-        print('files:\n\t%s' % files)
+        if self.verbose == True:      
+            print('files:\n\t%s' % files)
         tfs = list(files)
         for f in tfs:
             ext = os.path.splitext(f)
@@ -73,20 +77,26 @@ class scaner(object):
             else:
                 files.remove(f)
         filePaths = list(map(lambda f: os.path.join(path, f), files))
-        print('filted files:\n\t%s' % filePaths)
+        if self.verbose == True:     
+            print('filted files:\n\t%s' % filePaths)
         return filePaths
 
     def match(self, pattern, content):
-        print('match pattern: %s' % pattern)
+        if self.verbose == True:     
+            print('match pattern: %s' % pattern)
         cp = re.compile(pattern=pattern)
         r = cp.findall(string=content)
-        print('matched: %s', r)
+        if self.verbose == True:     
+            print('matched: %s', r)
         return r
     
     def scan(self):
+        if os.path.exists(self.target):
+            return
         assert len(self.sources) != 0, 'empty source paths'
         print('=== start scanning ===')
         for p in self.sources:
+            print(p)
             self.scan_file(p)
         print('=== stop scanning ===')
         # self.show_resultes()
@@ -98,7 +108,8 @@ class scaner(object):
         filePaths = self.filter_file_types(path=path);
         # 1.2 match
         for fp in filePaths:
-            print('file:\n%s' % fp)
+            if self.verbose == True:     
+                print('file:\n%s' % fp)
             with open(fp) as f:
                 content = f.read()
                 # 1.2.1 match classes

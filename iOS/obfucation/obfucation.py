@@ -3,45 +3,68 @@ import sys, os, getopt, json
 import scaner
 import substituter
 
+def usage():
+    print('Usages:')
+    print ('    -s <source directories>     source directories, could be divided by ","')
+    print ('    -t <output file>            target file path')
+    print ('    -c                          clear intermediate files')
+    print ('    -v                          print verbose')
 
 def handleOptions(argv):
     try:
-      (opts, args) = getopt.getopt(args=argv, shortopts="hs:t:")
+      (opts, args) = getopt.getopt(args=argv, shortopts="hs:t:cv")
     except getopt.GetoptError:
         print('invalid args')
         print ('use -h to get help')
         sys.exit(2)
 
-    options = {}
+    options = {
+        'verbose': False
+    }
     for opt, arg in opts:
         if opt == '-h':
-            print('Usages:')
-            print ('    -s <source directories>     source directories, could be divided by ","')
-            print ('    -t <output file>            target file path')
+            usage()
             sys.exit()
         elif opt in ("-s"):
             # split paths with ","
             paths = arg.split(',')
             # translate paths to absolute paths
-            options['sources'] = list(map(lambda p: os.path.abspath(os.path.normpath(p)), paths))
+            options['sources'] = list(map(lambda p: os.path.abspath(p), paths))
         elif opt in ("-t"):
             # translate paths to absolute paths
             options['target'] = os.path.abspath(os.path.normpath(arg))
+        elif opt in ("-c"):
+            # clear intermediate files
+            result_path = os.path.join(os.getcwd(), './result.json')
+            if os.path.exists(result_path): 
+                os.remove(result_path)
+        elif opt in ("-v"):
+            # clear intermediate files
+            options['verbose'] = True
+    
+    if 'sources' in options.keys():
+        pass
+    else:
+        print('invalid args')
+        print ('use -h to get help')
+        sys.exit(2)
+
     return options
 
 
 def main(argv):
     options = handleOptions(argv)
-    print('obfucation info:')
-    print(json.dumps(options))
+    if options['verbose'] == True:
+        print('obfucation info:')
+        print(json.dumps(options))
     # scan all files of codes
-    scanner = scaner.scaner(sources=options['sources'], target=options['target'])
+    scanner = scaner.scaner(sources=options['sources'], target=options['target'], verbose=options['verbose'])
     scanner.scan()
     scanner.save_resultes()
     # scanner.clear_resultes()
     
     # replace all files of codes
-    substitution = substituter.substituter(sources=options['sources'], scan_results_path=options['target'])
+    substitution = substituter.substituter(sources=options['sources'], scan_results_path=options['target'], verbose=options['verbose'])
     substitution.load_scan_results()
     substitution.substitute()
 

@@ -3,12 +3,13 @@ import mapper
 
 class substituter(object):
     
-    def __init__(self, sources = [], scan_results_path = './result.json'):
+    def __init__(self, sources = [], scan_results_path = './result.json', verbose=False):
         self.sources = sources
         self.scan_results_path = scan_results_path
         self.scan_results = {}
-        self.file_types = ['.h', '.m', '.mm']
+        self.file_types = ['.h', '.m', '.mm', '.pbxproj']
         self.mapper = mapper.mapper()
+        self.verbose = verbose
 
     def load_scan_results(self):
         with open(self.scan_results_path, 'r') as f:
@@ -18,14 +19,15 @@ class substituter(object):
         assert bool(self.scan_results), 'empty scan results'
         print('=== start substituting ===')
         for p in self.sources:
-            self.substitute_files(p)
+            # self.substitute_files(p)
             self.substitute_codes(p)
         print('=== stop substituting ===')
 
     def filter_file_types(self, path):
         filePaths = list(map(lambda f: os.path.join(path, f), os.listdir(path)))
         files = list(filter(lambda fp: os.path.isfile(fp), filePaths))
-        print('files:\n\t%s' % files)
+        if self.verbose == True:     
+            print('files:\n\t%s' % files)
         tfs = list(files)
         for f in tfs:
             ext = os.path.splitext(f)
@@ -37,7 +39,8 @@ class substituter(object):
             else:
                 files.remove(f)
         filePaths = list(map(lambda f: os.path.join(path, f), files))
-        print('filtered files:\n\t%s' % filePaths)
+        if self.verbose == True:     
+            print('filtered files:\n\t%s' % filePaths)
         return filePaths
 
     def filter_directories(self, path):
@@ -69,4 +72,14 @@ class substituter(object):
 
     # codes
     def substitute_codes(self, path):
-        pass
+        print('substitute codes path:\n%s' % path)
+        # 1. substitute file
+        # 1.1 filter specified file types
+        filePaths = self.filter_file_types(path)
+        # 1.2 substitute
+        for fp in filePaths:
+            pass
+        # 2. substitute sub directories
+        directoryPaths = self.filter_directories(path)
+        for d in directoryPaths:
+            self.substitute_codes(d)
