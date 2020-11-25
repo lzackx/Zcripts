@@ -1,6 +1,6 @@
 import sys, os, getopt, json
 
-import Scaner
+import scaner
 
 
 def handleOptions(argv):
@@ -34,9 +34,9 @@ def main(argv):
     print('obfucation info:')
     print(json.dumps(options))
     # scan all files of codes
-    scanner = Scaner.Scaner(sources=options['sources'], target=options['target'])
+    scanner = scaner.scaner(sources=options['sources'], target=options['target'])
     scanner.scan()
-    # scanner.save_resultes()
+    scanner.save_resultes()
     # scanner.clear_resultes()
 
 

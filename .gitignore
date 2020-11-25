@@ -50,3 +50,4 @@ Temporary Items
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.pyc
+/iOS/obfucation/*.json
