@@ -4,16 +4,16 @@ import matcher
 
 class scaner(object):
 
-    def __init__(self, sources = [], target = './result.json', verbose=False):
+    def __init__(self, options):
         self.resultes = {
             'classes': {},
             'methods': [],
             }
-        self.sources = sources
-        self.target = os.path.abspath(os.path.normpath(target))
+        self.sources = options['sources']
+        self.verbose = options['verbose']
+        self.target = os.path.abspath('./intermediate/result.json')
         self.class_file_types = ['.h']
         self.matcher = matcher.matcher()
-        self.verbose = verbose
     
     # results
     def clear_resultes(self):
@@ -87,7 +87,7 @@ class scaner(object):
         cp = re.compile(pattern=pattern)
         r = cp.findall(string=content)
         if self.verbose == True:     
-            print('matched: %s', r)
+            print('matched: %s' % r)
         return r
     
     def scan(self):

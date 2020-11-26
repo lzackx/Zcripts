@@ -51,3 +51,5 @@ Temporary Items
 __pycache__/
 *.pyc
 /iOS/obfucation/*.json
+intermediate/
+*.log
