@@ -4,7 +4,7 @@ import matcher
 
 class scaner(object):
 
-    def __init__(self, sources = [], target = './result.json', verbose=False):
+    def __init__(self, sources = [], target = './intermediate/result.json', verbose=False):
         self.resultes = {
             'classes': {},
             'methods': [],
@@ -87,7 +87,7 @@ class scaner(object):
         cp = re.compile(pattern=pattern)
         r = cp.findall(string=content)
         if self.verbose == True:     
-            print('matched: %s', r)
+            print('matched: %s' % r)
         return r
     
     def scan(self):

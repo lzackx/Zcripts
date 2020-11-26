@@ -1,14 +1,15 @@
 import os, json, re
-import mapper
+import mapper, matcher
 
 class substituter(object):
     
-    def __init__(self, sources = [], scan_results_path = './result.json', verbose=False):
+    def __init__(self, sources = [], scan_results_path = './intermediate/result.json', verbose=False):
         self.sources = sources
         self.scan_results_path = scan_results_path
         self.scan_results = {}
-        self.file_types = ['.h', '.m', '.mm', '.pbxproj']
+        self.file_types = ['.h', '.m', '.mm', '.pbxproj', '.pch']
         self.mapper = mapper.mapper()
+        self.matcher = matcher.matcher()
         self.verbose = verbose
 
     def load_scan_results(self):
@@ -19,8 +20,12 @@ class substituter(object):
         assert bool(self.scan_results), 'empty scan results'
         print('=== start substituting ===')
         for p in self.sources:
-            # self.substitute_files(p)
-            self.substitute_codes(p)
+            self.substitute_files(p)
+            self.substitute_classes(p)
+        with open(os.path.abspath('./intermediate/relation_files.json'), 'w') as f:
+            json.dump(self.mapper.relation_files, f)
+        with open(os.path.abspath('./intermediate/relation_classes.json'), 'w') as f:
+            json.dump(self.mapper.relation_classes, f)
         print('=== stop substituting ===')
 
     def filter_file_types(self, path):
@@ -58,28 +63,58 @@ class substituter(object):
         # 1.2 substitute
         for fp in filePaths:
             fn = os.path.basename(fp)
-            maped_fn = self.mapper.map(fn)
-            if fn != maped_fn:
-                p = os.path.split(fp)[0]
-                maped_fp = os.path.join(p, maped_fn)
-                os.rename(fp, maped_fp)
-                print('transfer:\n%s => %s' % (fp, maped_fp))
+            fnp, fns = os.path.splitext(fn)
+            file_include_sacan_result = False
+            for k in self.scan_results['classes'].keys():
+                if k in fn:
+                    file_include_sacan_result = True
+                    break
+            if file_include_sacan_result:
+                maped_fn = self.mapper.map_file(fn)
+                if fn != maped_fn:
+                    p = os.path.split(fp)[0]
+                    maped_fp = os.path.join(p, maped_fn)
+                    os.rename(fp, maped_fp)
+                    print('transfer:\n%s => %s' % (fp, maped_fp))
         # 2. substitute sub directories
         directoryPaths = self.filter_directories(path)
         for d in directoryPaths:
             self.substitute_files(d)
 
 
-    # codes
-    def substitute_codes(self, path):
-        print('substitute codes path:\n%s' % path)
+    # classes
+    def substitute_classes(self, path):
+        print('substitute classes path:\n%s' % path)
         # 1. substitute file
         # 1.1 filter specified file types
         filePaths = self.filter_file_types(path)
-        # 1.2 substitute
+        # 1.2 map classes
+        for sr in self.scan_results['classes']:
+            self.mapper.map_class(sr)
+        # 1.3 substitute
         for fp in filePaths:
-            pass
+            content = ''
+            with open(fp, 'r') as f:
+                content = f.read()
+            substituted_content = content
+            for srk in self.scan_results['classes'].keys():
+                print(srk)
+                if srk in self.mapper.relation_classes:
+                    print(self.matcher.class_objc_class_pattern(srk))
+                    print(self.mapper.relation_classes[srk])
+                    substituted_content = re.sub(self.matcher.class_objc_class_pattern(srk), 
+                    lambda matched: self.substitute_code(matched = matched, source=srk, target=self.mapper.relation_classes[srk]), 
+                    substituted_content)
+            with open(fp, 'w') as f:
+                f.write(substituted_content)
         # 2. substitute sub directories
         directoryPaths = self.filter_directories(path)
         for d in directoryPaths:
-            self.substitute_codes(d)
+            self.substitute_classes(d)
+
+    def substitute_code(self, matched, source, target):
+        match_string = matched.group()
+        substituted_string = match_string.replace(source, target)
+        if self.verbose:
+            print('substitute code:\n\t%s => %s' % (match_string, substituted_string))
+        return substituted_string
