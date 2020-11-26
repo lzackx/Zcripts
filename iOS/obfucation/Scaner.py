@@ -4,16 +4,16 @@ import matcher
 
 class scaner(object):
 
-    def __init__(self, sources = [], target = './intermediate/result.json', verbose=False):
+    def __init__(self, options):
         self.resultes = {
             'classes': {},
             'methods': [],
             }
-        self.sources = sources
-        self.target = os.path.abspath(os.path.normpath(target))
+        self.sources = options['sources']
+        self.verbose = options['verbose']
+        self.target = os.path.abspath('./intermediate/result.json')
         self.class_file_types = ['.h']
         self.matcher = matcher.matcher()
-        self.verbose = verbose
     
     # results
     def clear_resultes(self):

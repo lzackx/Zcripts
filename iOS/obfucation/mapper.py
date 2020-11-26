@@ -3,17 +3,17 @@ import matcher
 
 class mapper(object):
     
-    def __init__(self, rules_path='./rules.json'):
+    def __init__(self, rule_path='./rule.json'):
         self.relation_files = {}
         self.relation_classes = {}
-        self.rules_path = rules_path
+        self.rule_path = rule_path
         self.rules = {}
         self.matcher = matcher.matcher()
         self.load_rules()
         pass
 
     def load_rules(self): 
-        with open(self.rules_path, 'r') as f:
+        with open(self.rule_path, 'r') as f:
             self.rules = json.load(f)
 
     def map_file(self, name):

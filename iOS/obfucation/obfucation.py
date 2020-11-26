@@ -6,12 +6,14 @@ import substituter
 def usage():
     print('Usages:')
     print ('    -s <source directories>     source directories, could be divided by ","')
+    print ('    -r <rule file>              rules file path, JSON file, default for ./rule.json')
     print ('    -c                          clear intermediate files')
     print ('    -v                          print verbose')
+    print ('    -h                          help')
 
 def handleOptions(argv):
     try:
-      (opts, args) = getopt.getopt(args=argv, shortopts="hs:cv")
+      (opts, args) = getopt.getopt(args=argv, shortopts="s:r:cvh")
     except getopt.GetoptError:
         print('invalid args')
         print ('use -h to get help')
@@ -29,6 +31,8 @@ def handleOptions(argv):
             paths = arg.split(',')
             # translate paths to absolute paths
             options['sources'] = list(map(lambda p: os.path.abspath(p), paths))
+        elif opt in ("-r"):
+            options['rule'] = os.path.abspath(arg)
         elif opt in ("-c"):
             # clear intermediate files
             intermediate_path = os.path.join(os.getcwd(), './intermediate')
@@ -59,18 +63,17 @@ def main(argv):
         print('obfucation info:')
         print(json.dumps(options))
     # scan all files of codes
-    scanner = scaner.scaner(sources=options['sources'], verbose=options['verbose'])
+    scanner = scaner.scaner(options=options)
     scanner.scan()
     scanner.save_resultes()
     # scanner.clear_resultes()
     
     # replace all files of codes
-    substitution = substituter.substituter(sources=options['sources'], verbose=options['verbose'])
+    substitution = substituter.substituter(options=options)
     substitution.load_scan_results()
     substitution.substitute()
 
-    if options['verbose'] == True:
-        print('done !')
+    print('done !')
 
 if __name__ == "__main__":
     main(sys.argv[1:])

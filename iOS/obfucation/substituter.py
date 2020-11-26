@@ -3,14 +3,17 @@ import mapper, matcher
 
 class substituter(object):
     
-    def __init__(self, sources = [], scan_results_path = './intermediate/result.json', verbose=False):
-        self.sources = sources
-        self.scan_results_path = scan_results_path
+    def __init__(self, options):
+        self.sources = options['sources']
+        self.verbose = options['verbose']
+        self.scan_results_path = './intermediate/result.json'
         self.scan_results = {}
         self.file_types = ['.h', '.m', '.mm', '.pbxproj', '.pch']
-        self.mapper = mapper.mapper()
+        if 'rule' in options:
+            self.mapper = mapper.mapper(rule_path=options['rule'])
+        else:
+            self.mapper = mapper.mapper()
         self.matcher = matcher.matcher()
-        self.verbose = verbose
 
     def load_scan_results(self):
         with open(self.scan_results_path, 'r') as f:
