@@ -1,2 +1,2 @@
 # Zcripts
-Script for backend executions
+Script for convernience
