@@ -5,7 +5,7 @@ set -e
 echo "reference: https://leux.cn/doc/Raspberry%E9%80%9A%E8%BF%87%E8%93%9D%E7%89%99SSH.html"
 echo "\$*: $*"
 
-while getopts ":a:h" opt
+while getopts ":h" opt
 do
     # echo "OPTIND: $OPTIND"
     # echo "OPTARG: $OPTARG"
@@ -24,7 +24,7 @@ done
 # set -x
 
 echo '=== use super user ==='
-sudo su
+#sudo su
 
 echo '=== install dependencies ==='
 apt install bluez bluez-firmware bluez-tools dnsmasq
