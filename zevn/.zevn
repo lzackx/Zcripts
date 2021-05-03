@@ -1,9 +1,103 @@
+    
+# iOS Reverse
+# MonkeyDev
+export MonkeyDevPath=/opt/MonkeyDev
+export MonkeyDevDeviceIP=
+export PATH=$MonkeyDevPath/bin:$PATH
 
-# Alias
+# theos
+export theosPath=/opt/theos
+export PATH=$theosPath/bin:$PATH
+export THEOS=$theosPath
+
+# cycript
+export cycriptPath=/opt/cycript
+export PATH=$cycriptPath/cycript_0.9.594:$PATH
+
+#frida-ios-dump
+export FridaiOSDumpPath=/Users/lzackx/Work/Repositories/frida-ios-dump
+export PATH=$FridaiOSDumpPath:$PATH
+
+#
+export libexecPath=/usr/libexec
+export PATH=$libexecPath:$PATH
+
+# Server connection script
+export SERVER_CONNECTION_SCRIPT_HOME=/Users/lzackx/Work/ServerConnectionScript
+export PATH=$SERVER_CONNECTION_SCRIPT_HOME:$PATH
+
+# Android
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
+export ANDROID_HOME="/Users/lzackx/Library/Android/sdk"
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$HOME/.rvm/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#Logs
+export LogsPath=/Users/lzackx/Work/Logs
+export PATH=$LogsPath:$PATH
+
+# Terminal settings
+export LANG='UTC-8'
+export LC_ALL='en_US.UTF-8'
+
+# Flutter
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+export PATH="$PATH:/Users/lzackx/Work/Repositories/flutter/bin"
+
+# Homebrew
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.cloud.tencent.com/homebrew-bottles
+
+# oh-my-zsh
+ZSH_DISABLE_COMPFIX="true"
+
+# alias
 alias la='ls -al'
 alias pz='ps aux'
 alias zinet='ifconfig | grep "inet"'
+alias zfc='ls -l | grep "^-" | wc -l'
+alias zdc='ls -l | grep "^d" | wc -l'
+alias tree='find . -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g"'
+alias oc2cpp='xcrun -sdk iphoneos clang -rewrite-objc'
 alias ocd='open .'
 alias zdates='date +%s'
 alias zdater='date -r$1'
+alias zrecordsim='xcrun simctl io booted recordVideo'
+alias zpc='proxychains4'
+
+# proxy list
+#alias proxy='export all_proxy=socks5://127.0.0.1:1080'
+#alias unproxy='unset all_proxy'
+
+
+# toggle iTerm Dock icon
+# add this to your .bash_profile or .zshrc
+function toggleiTerm() {
+	pb='/usr/libexec/PlistBuddy'
+	iTerm='/Applications/iTerm.app/Contents/Info.plist'
+	echo "Do you wish to hide iTerm in Dock?"
+	select ync in "Hide" "Show" "Cancel"; do
+	case $ync in
+		'Hide' )
+			$pb -c "Add :LSUIElement bool true" $iTerm
+			echo "relaunch iTerm to take effectives"
+			break
+		;;
+		'Show' )
+			$pb -c "Delete :LSUIElement" $iTerm
+			echo "run killall 'iTerm' to exit, and then relaunch it"
+			break
+		;;
+		'Cancel' )
+		break
+		;;
+	esac
+	done
+}
 
