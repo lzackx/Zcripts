@@ -101,3 +101,25 @@ function toggleiTerm() {
 	done
 }
 
+
+# switch flutter version
+function sfv() {
+	FLUTTER_HOME='/Users/lzackx/Works/ZZC/Repositories/flutter_home'
+	echo "select version:"
+	select version in "stable" "2.0.3"; do
+	case $version in
+		'stable' )
+			rm $FLUTTER_HOME/../flutter
+			ln -s $FLUTTER_HOME/flutter_stable $FLUTTER_HOME/../flutter
+			break
+		;;
+		'2.0.3' )
+			rm $FLUTTER_HOME/../flutter
+			ln -s $FLUTTER_HOME/flutter_2_0_3 $FLUTTER_HOME/../flutter
+			break
+		;;
+	esac
+	done
+	source ~/.zshrc
+	echo "select done"
+}
