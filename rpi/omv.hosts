@@ -15,14 +15,14 @@ ff02::3 ip6-allhosts
 # Update 20210707
 # domain: github.com
 140.82.113.4 github.com
-140.82.113.9 nodeload.github.com
 140.82.114.5 api.github.com
+140.82.113.9 nodeload.github.com
 140.82.113.9 codeload.github.com
 185.199.108.133 raw.github.com
+185.199.108.154 help.github.com
 185.199.108.153 training.github.com
 185.199.108.153 assets-cdn.github.com
 185.199.108.153 documentcloud.github.com
-185.199.108.154 help.github.com
 # domain: githubstatus.com
 185.199.108.153 githubstatus.com
 # domain: fastly.net
@@ -47,5 +47,6 @@ ff02::3 ip6-allhosts
 185.199.108.133 avatars8.githubusercontent.com
 # domain: github.io
 185.199.108.153	github.io
+185.199.110.153 openmediavault.github.io
 185.199.108.153 openmediavault-plugin-developers.github.io
 # End of the section
