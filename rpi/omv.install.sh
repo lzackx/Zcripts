@@ -18,7 +18,11 @@ cd Zcripts
 sudo cp ./rpi/omv.hosts /etc/hosts
 
 cd ~/Repositories
+mkdir apc
+cd apc
+wget https://udomain.dl.sourceforge.net/project/apcupsd/apcupsd%20-%20Stable/3.14.14/apcupsd-3.14.14.tar.gz
 
+cd ~/Repositories
 sudo apt update
 sudo apt upgrade -y
 
