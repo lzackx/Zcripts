@@ -14,10 +14,10 @@ ff02::3 ip6-allhosts
 # Github Hosts
 # Update 20210707
 # domain: github.com
-140.82.113.4 github.com
-140.82.114.5 api.github.com
-140.82.113.9 nodeload.github.com
-140.82.113.9 codeload.github.com
+13.229.188.59 github.com
+192.30.255.117 api.github.com
+13.229.189.0 nodeload.github.com
+54.251.140.56 codeload.github.com
 185.199.108.133 raw.github.com
 185.199.108.154 help.github.com
 185.199.108.153 training.github.com
@@ -28,25 +28,25 @@ ff02::3 ip6-allhosts
 # domain: fastly.net
 199.232.69.194 github.global.ssl.fastly.net
 # domain: githubusercontent.com
-185.199.108.133 raw.githubusercontent.com
-185.199.108.133 cloud.githubusercontent.com
-185.199.108.133 gist.githubusercontent.com
-185.199.108.133 marketplace-screenshots.githubusercontent.com
-185.199.108.133 repository-images.githubusercontent.com
-185.199.108.133 user-images.githubusercontent.com
-185.199.108.133 desktop.githubusercontent.com
-185.199.108.133 avatars.githubusercontent.com
-185.199.108.133 avatars0.githubusercontent.com
-185.199.108.133 avatars1.githubusercontent.com
-185.199.108.133 avatars2.githubusercontent.com
-185.199.108.133 avatars3.githubusercontent.com
-185.199.108.133 avatars4.githubusercontent.com
-185.199.108.133 avatars5.githubusercontent.com
-185.199.108.133 avatars6.githubusercontent.com
-185.199.108.133 avatars7.githubusercontent.com
-185.199.108.133 avatars8.githubusercontent.com
+185.199.109.133 raw.githubusercontent.com
+185.199.109.133 cloud.githubusercontent.com
+185.199.109.133 gist.githubusercontent.com
+185.199.109.133 marketplace-screenshots.githubusercontent.com
+185.199.109.133 repository-images.githubusercontent.com
+185.199.109.133 user-images.githubusercontent.com
+185.199.109.133 desktop.githubusercontent.com
+185.199.109.133 avatars.githubusercontent.com
+185.199.109.133 avatars0.githubusercontent.com
+185.199.109.133 avatars1.githubusercontent.com
+185.199.109.133 avatars2.githubusercontent.com
+185.199.109.133 avatars3.githubusercontent.com
+185.199.109.133 avatars4.githubusercontent.com
+185.199.109.133 avatars5.githubusercontent.com
+185.199.109.133 avatars6.githubusercontent.com
+185.199.109.133 avatars7.githubusercontent.com
+185.199.109.133 avatars8.githubusercontent.com
 # domain: github.io
-185.199.108.153	github.io
-185.199.110.153 openmediavault.github.io
-185.199.108.153 openmediavault-plugin-developers.github.io
+185.199.109.153	github.io
+185.199.108.153 openmediavault.github.io
+185.199.109.153 openmediavault-plugin-developers.github.io
 # End of the section
