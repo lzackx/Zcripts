@@ -1,0 +1,21 @@
+{
+  "name": "z-base-bundler",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "react-native-code-push": "7.0.1"
+  },
+  "devDependencies": {},
+  "jest": {
+    "preset": "react-native"
+  }
+}
