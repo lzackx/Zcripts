@@ -33,8 +33,9 @@ class scaner(object):
     def add_classes(self, classes, path):
         if len(classes) > 0:
             cs = list(map(lambda c: {c: path}, classes))
-            dcs = dict(functools.reduce(lambda x,y: x, cs))
-            self.resultes['classes'].update(dcs)
+            for c in cs:
+                self.resultes['classes'].update(c)
+
 
     def clear_classes(self):
         self.resultes['classes'] = {}

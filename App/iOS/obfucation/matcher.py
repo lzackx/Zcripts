@@ -17,7 +17,7 @@ class matcher(object):
     # Class
     def class_objc_pattern(self):
         # @interface class :
-        return r'\@interface{1}[\s]+([\w]+)[\s]+[\:]{1}'
+        return r'\@interface{1}[\s]+([\w]+)[\s]*\<?[\w\s\,]*\>?[\s]*[\:]{1}'
 
     # #  Method
     # def method_objc_pattern(self):
