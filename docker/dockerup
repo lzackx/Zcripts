@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sudo docker-compose -f ./docker-compose.yml --verbose --log-level DEBUG --project-directory ./ up -d

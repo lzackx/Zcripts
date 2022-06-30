@@ -1,2 +1,0 @@
-#!/bin/bash
-cleos push action $1 create "[\"$1\", \"8800000000.0000 MCC\", 0, 0, 0]" -p $1

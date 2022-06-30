@@ -1,5 +1,8 @@
 #!/bin/zsh
 
-zpc pod repo update
+set -x
+set -e
+
+pod repo update --verbose
 
 date

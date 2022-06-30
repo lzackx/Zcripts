@@ -1,2 +1,0 @@
-#!/bin/bash
-cleos push action $1 issue "[\"$2\", \"100000000.0000 MCC\", \"issue MCC\"]"" -p eosio
