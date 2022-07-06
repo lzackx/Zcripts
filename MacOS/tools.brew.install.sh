@@ -1,14 +1,24 @@
-#!/bin/bash
-
-set -x
-set -e
+#!/bin/zsh -ex
 
 brew install vim
 
-brew install podman
+# For Git
+brew install git
+#brew install git-lfs
 
-brew install gnupg
-
+# For iOS
 brew install chisel
 
-brew search nvm     # use podman container
+# For OCI
+brew install podman
+brew install gnupg
+
+# For React
+#brew search nvm
+
+# For Unity
+#brew install dotnet
+#brew install mono-mdk
+
+# For CI
+#brew install jenkins-lts
